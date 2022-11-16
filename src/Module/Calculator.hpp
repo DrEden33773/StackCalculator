@@ -69,6 +69,7 @@ class Calculator {
             if (if_num) {
                 try {
                     long double to_push = std::stold(curr);
+                    DecimalStack.push_back(to_push);
                 } catch (const std::invalid_argument& e) {
                     std::cout << "Can't cast from string to long double, because:"
                               << e.what()
