@@ -1,0 +1,6 @@
+[
+{
+  "directory": "e:\\CollegeLearningRepo\\DS_CurriculumDesign\\StackCalculator",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-std=c++20", "-o", "build\\.objs\\HuffmanCompress\\windows\\x64\\src\\main.cpp.obj", "src\\main.cpp"],
+  "file": "src\\main.cpp"
+}]
