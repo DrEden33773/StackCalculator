@@ -66,10 +66,6 @@ class Parser {
         TokenStream = received;
     }
     void trans_into_PostOrder() {
-        if (TokenStream.size() == 2) {
-            EmptyException();
-        }
-
         Parser& curr_parse_process = *this;
         OperatorStack.push_back("#");
         int token_idx = 1;
@@ -140,12 +136,7 @@ class Parser {
         std::cout << std::endl;
         std::cout << "One case is that you've input too many operators" << std::endl;
         std::cout << "Another one is that column in input CAN'T MATCH, such as \"(...(...)\" " << std::endl;
-        throw std::runtime_error("Input <operator part> is not correct,\
-            semantic error occurs!");
-    }
-    void EmptyException() {
-        throw std::runtime_error("You haven't input any expression,\
-            semantic error occurs!");
+        throw std::runtime_error("Input <operator part> is not correct, semantic error occurs!");
     }
 
 public:

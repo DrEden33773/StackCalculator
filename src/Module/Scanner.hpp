@@ -13,6 +13,7 @@
 
 #include "../FileManager.hpp"
 
+#include <algorithm>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -110,7 +111,7 @@ class Scanner {
         if (!opt_file.is_open()) {
             throw std::runtime_error("Failed to open `source.txt`!");
         }
-        char curr_char;
+        char curr_char = 0;
         while (opt_file.get(curr_char)) {
             if (curr_char == ' ' || curr_char == '\t' || curr_char == '\n') {
                 continue;
@@ -134,21 +135,43 @@ public:
     void StartEndSignalException() {
         throw std::runtime_error("`#` is not complete, can't calculate!");
     }
+    void TooManySignalException() {
+        throw std::runtime_error("Too many `#`, can't calculate!");
+    }
+    void EmptyException() {
+        throw std::runtime_error("You haven't input any expression, semantic error occurs!");
+    }
     void lexer() {
         if (Expression.front() != '#' || Expression.back() != '#') {
             StartEndSignalException();
         }
+        int num_of_sig = 0;
+        std::for_each(
+            Expression.begin(),
+            Expression.end(),
+            [&num_of_sig](const char& curr) {
+                if (curr == '#') {
+                    ++num_of_sig;
+                }
+            }
+        );
+        if (Expression.size() == 2) {
+            EmptyException();
+        }
+        if (num_of_sig > 2) {
+            TooManySignalException();
+        }
         std::string curr_token;
         for (const char& curr_char : Expression) {
-            if (!supported_char.contains(curr_char)) {
-                SyntaxErrorException(curr_char);
-            }
             if (curr_char == ' ' || curr_char == '\t' || curr_char == '\n') {
                 continue;
             }
+            if (!supported_char.contains(curr_char)) {
+                SyntaxErrorException(curr_char);
+            }
             bool if_operator = operator_char.contains(curr_char);
             bool if_signal   = signal_char.contains(curr_char);
-            if (if_operator) {
+            if (if_operator || if_signal) {
                 // curr_token ==move=> TokenStream
                 if (curr_token != "") {
                     TokenStream.push_back(curr_token);
@@ -172,7 +195,7 @@ public:
     auto Debug_Keyboard_IO() {
         std::cout << "(Debug) Please input the expression" << std::endl;
         std::cout << ">>> ";
-        std::cin >> Expression;
+        std::getline(std::cin, Expression);
         lexer();
         return TokenStream;
     }
