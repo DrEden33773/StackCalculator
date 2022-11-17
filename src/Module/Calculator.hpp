@@ -12,6 +12,7 @@
 #pragma once
 
 #include <algorithm>
+#include <exception>
 #include <iostream>
 #include <list>
 #include <stdexcept>
@@ -35,6 +36,9 @@ class Calculator {
     std::list<long double> DecimalStack;
 
     void decimal_operate(Operation opt) {
+        if (DecimalStack.size() < 2) {
+            TooManyOperatorsException(opt);
+        }
         long double right = DecimalStack.back();
         DecimalStack.pop_back();
         long double left = DecimalStack.back();
@@ -112,6 +116,38 @@ class Calculator {
         );
         std::cout << std::endl;
         std::cout << std::endl;
+    }
+
+    void TooManyOperatorsException(Operation opt) {
+        auto get_optr = [opt]() {
+            std::string ret;
+            switch (opt) {
+            case add:
+                ret = "+";
+                break;
+            case sub:
+                ret = "-";
+                break;
+            case multiply:
+                ret = "*";
+                break;
+            case divide:
+                ret = "/";
+                break;
+            }
+            return ret;
+        };
+        const std::string& curr_operator = get_optr();
+        std::cout << "Decimal Stack only contains >> "
+                  << DecimalStack.back()
+                  << std::endl;
+        std::cout << "But, an operator ("
+                  << curr_operator
+                  << ") asks `TWO` decimal in the stack for calculation"
+                  << std::endl;
+        std::cout << "It means that, you've input TOO MANY Operators!"
+                  << std::endl;
+        throw std::logic_error("Too Many Operators!");
     }
 
 public:
