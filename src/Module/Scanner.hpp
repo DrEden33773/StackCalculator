@@ -191,12 +191,29 @@ public:
         }
     }
 
+    void rend_the_TokenStream() {
+        std::cout << "Lexer have successfully extracted `TokenStream`..." << std::endl;
+        std::cout << "Here's the `TokenStream` >>> " << std::endl;
+
+        int token_idx = 0;
+        std::for_each(
+            TokenStream.begin(),
+            TokenStream.end(),
+            [&](const std::string& curr_token) {
+                std::cout << "[" << token_idx << "] >> ";
+                std::cout << curr_token << std::endl;
+            }
+        );
+        std::cout << std::endl;
+    }
+
 public:
     auto Debug_Keyboard_IO() {
         std::cout << "(Debug) Please input the expression" << std::endl;
         std::cout << ">>> ";
         std::getline(std::cin, Expression);
         lexer();
+        rend_the_TokenStream();
         return TokenStream;
     }
     auto File_IO() {
@@ -204,6 +221,7 @@ public:
         copy_the_source_file();
         scan_opt_file();
         lexer();
+        rend_the_TokenStream();
         return TokenStream;
     }
 };

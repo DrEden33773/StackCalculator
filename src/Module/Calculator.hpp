@@ -28,8 +28,7 @@ class Calculator {
         divide   = 3,
     };
 
-    using P_Stack
-        = std::list<std::string>;
+    using P_Stack = std::list<std::string>;
     using R_Stack = std::list<long double>;
 
     std::list<std::string> PostOrderStack;
