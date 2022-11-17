@@ -59,6 +59,7 @@ class Calculator {
     }
 
     void calculate() {
+        rend_two_stacks();
         for (const std::string& curr : PostOrderStack) {
             bool if_add = curr == "+";
             bool if_sub = curr == "-";
@@ -87,13 +88,45 @@ class Calculator {
             } else {
                 decimal_operate(divide);
             }
+            rend_two_stacks();
         }
+    }
+
+    void rend_two_stacks() {
+        std::cout << "Current Post Order Stack >> ";
+        std::for_each(
+            PostOrderStack.begin(),
+            PostOrderStack.end(),
+            [](const std::string& curr) {
+                std::cout << curr << " ";
+            }
+        );
+        std::cout << std::endl;
+        std::cout << "Current Decimal Stack >> ";
+        std::for_each(
+            DecimalStack.begin(),
+            DecimalStack.end(),
+            [](const long double& curr) {
+                std::cout << curr << " ";
+            }
+        );
+        std::cout << std::endl;
+        std::cout << std::endl;
     }
 
 public:
     void calculate_process(const P_Stack& in) {
+        std::cout << "=========== Calculator ===========" << std::endl;
+        std::cout << std::endl;
+
         import_PostOrderStack(in);
         calculate();
+
+        std::cout << "Calculator have successfully get the result!" << std::endl;
+        std::cout << std::endl;
+        std::cout << "=========== End of Calculator ===========" << std::endl;
+        std::cout << std::endl;
+
         double long res = DecimalStack.back();
         std::cout << "Result = " << res << std::endl;
         std::cout << std::endl;

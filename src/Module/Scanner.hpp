@@ -192,6 +192,7 @@ public:
     }
 
     void rend_the_TokenStream() {
+        std::cout << std::endl;
         std::cout << "Lexer have successfully extracted `TokenStream`..." << std::endl;
         std::cout << "Here's the `TokenStream` >>> " << std::endl;
 
@@ -202,6 +203,7 @@ public:
             [&](const std::string& curr_token) {
                 std::cout << "[" << token_idx << "] >> ";
                 std::cout << curr_token << std::endl;
+                ++token_idx;
             }
         );
         std::cout << std::endl;
@@ -214,6 +216,10 @@ public:
         std::getline(std::cin, Expression);
         lexer();
         rend_the_TokenStream();
+
+        std::cout << "=========== End of Scanner ===========" << std::endl;
+        std::cout << std::endl;
+
         return TokenStream;
     }
     auto File_IO() {
@@ -222,6 +228,10 @@ public:
         scan_opt_file();
         lexer();
         rend_the_TokenStream();
+
+        std::cout << "=========== End of Scanner ===========" << std::endl;
+        std::cout << std::endl;
+
         return TokenStream;
     }
 };

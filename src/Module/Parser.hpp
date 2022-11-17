@@ -69,6 +69,8 @@ class Parser {
         Parser& curr_parse_process = *this;
         OperatorStack.push_back("#");
         int token_idx = 1;
+
+        rend_two_stacks();
         while (!OperatorStack.empty() && token_idx < TokenStream.size()) {
             const std::string& curr_token = TokenStream[token_idx];
             if (!operators.contains(curr_token)) {
@@ -98,10 +100,33 @@ class Parser {
                     OperatorStack.pop_back();
                 }
             }
+            rend_two_stacks();
         }
         if (!OperatorStack.empty()) {
             OperatorMatchException();
         }
+    }
+
+    void rend_two_stacks() {
+        std::cout << "Current Operator Stack >> ";
+        std::for_each(
+            OperatorStack.begin(),
+            OperatorStack.end(),
+            [](const std::string& curr) {
+                std::cout << curr << " ";
+            }
+        );
+        std::cout << std::endl;
+        std::cout << "Current Post Order Stack >> ";
+        std::for_each(
+            PostOrderStack.begin(),
+            PostOrderStack.end(),
+            [](const std::string& curr) {
+                std::cout << curr << " ";
+            }
+        );
+        std::cout << std::endl;
+        std::cout << std::endl;
     }
 
     void OperatorRelationException(
@@ -141,8 +166,17 @@ class Parser {
 
 public:
     auto parser_process(const TokenStreamType& received) {
+        std::cout << "=========== Parser ===========" << std::endl;
+        std::cout << std::endl;
+
         receive_TokenStream(received);
         trans_into_PostOrder();
+
+        std::cout << "Parser have successfully extracted `Post Order Stack`!" << std::endl;
+        std::cout << std::endl;
+        std::cout << "=========== End of Parser ===========" << std::endl;
+        std::cout << std::endl;
+
         return PostOrderStack;
     }
 };
