@@ -23,16 +23,16 @@ namespace fs = std::filesystem;
 
 namespace Path {
     /* root */
-    static fs::path Root = "Files";
+    static const fs::path Root = "Files";
 }
 
 namespace Filename {
     /* Source.txt */
-    static fs::path SourceFile = Path::Root / "source.txt";
+    static const fs::path SourceFile = Path::Root / "source.txt";
 } // namespace Filename
 
 /* all_path in a vec */
-static std::vector<fs::path> all_path {
+static const std::vector<fs::path> all_path {
     Path::Root,
 };
 
