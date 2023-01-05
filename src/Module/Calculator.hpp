@@ -64,12 +64,43 @@ class Calculator {
 
     void calculate() {
         rend_two_stacks();
-        for (const std::string& curr : PostOrderStack) {
-            bool if_add = curr == "+";
-            bool if_sub = curr == "-";
-            bool if_mul = curr == "*";
-            bool if_div = curr == "/";
-            bool if_num = !if_add && !if_sub && !if_mul && !if_div;
+        // for (const std::string& curr : PostOrderStack) {
+        //     bool if_add = curr == "+";
+        //     bool if_sub = curr == "-";
+        //     bool if_mul = curr == "*";
+        //     bool if_div = curr == "/";
+        //     bool if_num = !if_add && !if_sub && !if_mul && !if_div;
+        //     if (if_num) {
+        //         try {
+        //             long double to_push = std::stold(curr);
+        //             DecimalStack.push_back(to_push);
+        //         } catch (const std::invalid_argument& e) {
+        //             std::cout << "Can't cast from string to long double, because:"
+        //                       << e.what()
+        //                       << std::endl;
+        //         } catch (const std::out_of_range& e) {
+        //             std::cout << "Can't cast from string to long double, because:"
+        //                       << e.what()
+        //                       << std::endl;
+        //         }
+        //     } else if (if_add) {
+        //         decimal_operate(add);
+        //     } else if (if_sub) {
+        //         decimal_operate(sub);
+        //     } else if (if_mul) {
+        //         decimal_operate(multiply);
+        //     } else {
+        //         decimal_operate(divide);
+        //     }
+        //     rend_two_stacks();
+        // }
+        while (!PostOrderStack.empty()) {
+            const std::string& curr   = PostOrderStack.front();
+            bool               if_add = curr == "+";
+            bool               if_sub = curr == "-";
+            bool               if_mul = curr == "*";
+            bool               if_div = curr == "/";
+            bool               if_num = !if_add && !if_sub && !if_mul && !if_div;
             if (if_num) {
                 try {
                     long double to_push = std::stold(curr);
@@ -92,6 +123,7 @@ class Calculator {
             } else {
                 decimal_operate(divide);
             }
+            PostOrderStack.pop_front();
             rend_two_stacks();
         }
     }
