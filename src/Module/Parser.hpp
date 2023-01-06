@@ -68,8 +68,7 @@ class Parser {
     void trans_into_PostOrder() {
         Parser& curr_parse_process = *this;
         OperatorStack.push_back("#");
-        int token_idx = 1;
-
+        int token_idx = 1; // != 0 => because we could ignore first `#` here
         rend_two_stacks();
         while (!OperatorStack.empty() && token_idx < TokenStream.size()) {
             const std::string& curr_token = TokenStream[token_idx];
